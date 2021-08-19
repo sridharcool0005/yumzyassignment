@@ -1,0 +1,38 @@
+<form [formGroup]="invoiceForm">
+	<table border=1>
+		<thead>
+			<th>Id</th>
+			<th>fromdistance</th>
+			<th>todistance</th>
+      <th>price</th>
+			<th>Action</th>
+
+		</thead>
+		<tbody formArrayName="Rows">
+			<tr *ngFor="let itemrow of invoiceForm.controls.Rows['controls']; let i=index;let l=last"
+				[formGroupName]="i">
+				<td>{{i+1}}</td>
+				<td>
+					<input type="number" formControlName="fromdistance" (change)="validFromDistance($event)" class="form-control" placeholder="fromdistance">
+        </td>
+        <td>
+					<input type="number" formControlName="todistance" class="form-control" (change)="minToDistance=$event.target.value" placeholder="todistance">
+        </td>
+        <td>
+					<input type="number" formControlName="price" class="form-control" placeholder="price">
+        </td>
+				<td>
+					<button *ngIf="invoiceForm.controls.Rows.controls.length > 1" (click)="deleteRow(i)" class="btn btn-danger">Delete</button>
+          <button type="button" *ngIf="l" (click)="addNewRow()"  class="btn btn-primary">Add new Row</button>
+
+        </td>
+			</tr>
+		</tbody>
+	</table>
+</form>
+<br>
+<button type="button" class="btn btn-primary">Submit</button>
+
+<br/>
+<br/>
+<pre>{{invoiceForm.value | json}}</pre>
